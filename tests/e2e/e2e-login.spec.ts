@@ -3,28 +3,29 @@ import { allure } from 'allure-playwright'
 
 import { LoginPage } from '../../page-objects/LoginPage'
 import { Severity } from '../../utils/severity'
+import { HomePage } from '../../page-objects/HomePage'
 
-test.describe('Login / logout flow', () => {
+test.describe.only('Login / logout flow', () => {
+    let homePage: HomePage
     let loginPage: LoginPage
 
     test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page)
-        await loginPage.visit()
+        homePage = new HomePage(page)
+        homePage.visit()
+        loginPage = await homePage.clickSignIn()
     })
 
-    test('Negative scenario for login', async ({ page }) => {
+    test('Unsuccessful login', async ({ page }) => {
         allure.severity(Severity[1])
 
-        await page.click('#signin_button')
         await loginPage.login('invalidusername', 'invalidpassword')
         const errorMessage = await loginPage.getErrorMessage()
         await expect(errorMessage).toContainText('Login and/or password are wrong.')
     })
 
-    test('Positive scenario for login', async ({ page }) => {
+    test('Successful login', async ({ page }) => {
         allure.severity(Severity[1])
 
-        await page.click('#signin_button')
         await loginPage.login('username', 'password')
         const errorMessage = await loginPage.getErrorMessage()
         await expect(errorMessage).not.toBeVisible()
