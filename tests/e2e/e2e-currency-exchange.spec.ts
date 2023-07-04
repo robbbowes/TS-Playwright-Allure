@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('Currency conversion', () => {
     test.beforeEach(async ({ page }) => {
@@ -11,6 +13,8 @@ test.describe('Currency conversion', () => {
     })
 
     test('Convert Euros to US dollars', async ({ page }) => {
+        allure.severity(Severity[2])
+
         await page
             .getByRole('link', { name: 'Purchase Foreign Currency' })
             .click()

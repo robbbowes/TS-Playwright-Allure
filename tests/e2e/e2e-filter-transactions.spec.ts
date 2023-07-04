@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('Filter transactions', () => {
     test.beforeEach(async ({ page }) => {
@@ -13,6 +15,8 @@ test.describe('Filter transactions', () => {
     })
 
     test('Verify the results for each account', async ({ page }) => {
+        allure.severity(Severity[3])
+        
         await page.click('#account_activity_tab')
         await page.selectOption('#aa_accountId', '2')
         const checkinAccount = await page.locator(

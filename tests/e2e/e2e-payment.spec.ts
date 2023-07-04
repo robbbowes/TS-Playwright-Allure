@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('New payment', () => {
     test.beforeEach(async ({ page }) => {
@@ -13,6 +15,8 @@ test.describe('New payment', () => {
     })
 
     test('Should send new payment', async ({ page }) => {
+        allure.severity(Severity[1])
+        
         await page.click('#pay_bills_tab')
         await page.selectOption('#sp_payee', 'apple')
         await page.click('#sp_get_payee_details')

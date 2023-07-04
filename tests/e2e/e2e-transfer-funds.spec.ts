@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('Transfer funds and ake payments', () => {
     test.beforeEach(async ({ page }) => {
@@ -13,6 +15,8 @@ test.describe('Transfer funds and ake payments', () => {
     })
 
     test('Transfer funds', async ({ page }) => {
+        allure.severity(Severity[2])
+
         await page.click('#transfer_funds_tab')
         await page.selectOption('#tf_fromAccountId', '2')
         await page.selectOption('#tf_toAccountId', '3')

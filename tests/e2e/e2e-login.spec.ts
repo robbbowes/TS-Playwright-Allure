@@ -1,7 +1,11 @@
 import { test, expect } from '@playwright/test'
-import { LoginPage } from '../../page-objects/LoginPage'
+import { allure } from "allure-playwright";
 
-test.describe.only('Login / logout flow', () => {
+import { LoginPage } from '../../page-objects/LoginPage'
+import { Severity } from '../../utils/severity';
+
+test.describe('Login / logout flow', () => {
+
     let loginPage: LoginPage
 
     test.beforeEach(async ({ page }) => {
@@ -11,15 +15,19 @@ test.describe.only('Login / logout flow', () => {
 
     // Negative scenario
     test('Negative scenario for login', async ({ page }) => {
+        allure.severity(Severity[1])
+
         await loginPage.login('invalidusername', 'invalidpassword')
         const errorMessage = await loginPage.getErrorMessage()
         await expect(errorMessage).toContainText(
-            'Login and/or password are wrong.'
+            'Login and/or password are adsasdasdasdwrong.'
         )
     })
 
     // Positive scenario
     test('Positive scenario for login', async ({ page }) => {
+        allure.severity(Severity[1])
+
         await loginPage.login('username', 'password')
         const errorMessage = await loginPage.getErrorMessage()
         await expect(errorMessage).not.toBeVisible()

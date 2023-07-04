@@ -8,13 +8,16 @@
         "tests:firefox": "playwright test --config=playwright.config.ts --project=Firefox",
         "tests:webkit": "playwright test --config=playwright.config.ts --project=Webkit",
         "tests:report": "playwright test --config=playwright.config.ts --project=Chromium --headed --reporter=html",
-        
-        "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium"
+        "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium",
+        "tests:e2e:mobile": "playwright test --config=e2e.config.ts --project=MobileChromium"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@playwright/test": "^1.35.1",
         "prettier": "^2.8.8"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.35.1",
+        "allure-playwright": "^2.4.0"
     }
 }

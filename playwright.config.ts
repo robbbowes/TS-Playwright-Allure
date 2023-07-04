@@ -23,6 +23,16 @@ const config: PlaywrightTestConfig = {
         { name: 'Chromium', use: { browserName: 'chromium' } },
         { name: 'Firefox', use: { browserName: 'firefox' } },
         { name: 'Webkit', use: { browserName: 'webkit' } }
+    ],
+    reporter: [
+        [
+            'allure-playwright',
+            {
+                detail: true,
+                outputFolder: 'allure-results',
+                suiteTitle: true
+            }
+        ]
     ]
 }
 

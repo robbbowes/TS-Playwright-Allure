@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('Feedback form submit', () => {
     test.beforeEach(async ({ page }) => {
@@ -7,6 +9,8 @@ test.describe('Feedback form submit', () => {
     })
 
     test('Reset feedback form', async ({ page }) => {
+        allure.severity(Severity[3])
+
         await page.fill('#name', 'some name')
         await page.fill('#email', 'some@email.com')
         await page.fill('#subject', 'some subject')
@@ -31,6 +35,8 @@ test.describe('Feedback form submit', () => {
     })
 
     test('Submit feedback form', async ({ page }) => {
+        allure.severity(Severity[2])
+
         await page.fill('#name', 'some name')
         await page.fill('#email', 'some@email.com')
         await page.fill('#subject', 'some subject')

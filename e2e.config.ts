@@ -1,4 +1,4 @@
-import { PlaywrightTestConfig } from '@playwright/test'
+import { PlaywrightTestConfig, devices } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
     testDir: 'tests/e2e/',
@@ -20,9 +20,20 @@ const config: PlaywrightTestConfig = {
         screenshot: 'only-on-failure'
     },
     projects: [
-        { name: 'Chromium', use: { browserName: 'chromium' } },
-        { name: 'Firefox', use: { browserName: 'firefox' } },
-        { name: 'Webkit', use: { browserName: 'webkit' } }
+        { name: 'Chromium', use: { ...devices['Desktop Chrome'] } },
+        { name: 'Firefox', use: { ...devices['Desktop Firefox'] } },
+        { name: 'Webkit', use: { ...devices['Desktop Safari'] } },
+        { name: 'MobileChromium', use: { ...devices['Pixel 5'] } }
+    ],
+    reporter: [
+        [
+            'allure-playwright',
+            {
+                detail: true,
+                outputFolder: 'allure-results',
+                suiteTitle: true
+            }
+        ]
     ]
 }
 
