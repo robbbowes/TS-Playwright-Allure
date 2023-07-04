@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test'
-import { allure } from "allure-playwright";
-import { Severity } from '../../utils/severity';
+import { allure } from 'allure-playwright'
+import { Severity } from '../../utils/severity'
 
 test.describe('Search result', () => {
-
     test('Should return search results', async ({ page }) => {
         allure.severity(Severity[4])
 

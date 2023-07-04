@@ -9,9 +9,7 @@ test.describe('Transfer funds and ake payments', () => {
         await page.fill('#user_login', 'username')
         await page.fill('#user_password', 'password')
         await page.click('text=Sign in')
-        await page.goto(
-            'http://zero.webappsecurity.com/bank/transfer-funds.html'
-        )
+        await page.goto('http://zero.webappsecurity.com/bank/transfer-funds.html')
     })
 
     test('Transfer funds', async ({ page }) => {
@@ -29,8 +27,6 @@ test.describe('Transfer funds and ake payments', () => {
         await page.click('#btn_submit')
 
         const message = await page.locator('.alert-success')
-        await expect(message).toContainText(
-            'You successfully submitted your transaction'
-        )
+        await expect(message).toContainText('You successfully submitted your transaction')
     })
 })

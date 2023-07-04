@@ -15,16 +15,10 @@ test.describe('Currency conversion', () => {
     test('Convert Euros to US dollars', async ({ page }) => {
         allure.severity(Severity[2])
 
-        await page
-            .getByRole('link', { name: 'Purchase Foreign Currency' })
-            .click()
+        await page.getByRole('link', { name: 'Purchase Foreign Currency' }).click()
 
-        await page
-            .getByRole('combobox', { name: 'Currency' })
-            .selectOption('EUR')
-        await page
-            .getByRole('textbox', { name: 'Amount Conversion Amount' })
-            .fill('500')
+        await page.getByRole('combobox', { name: 'Currency' }).selectOption('EUR')
+        await page.getByRole('textbox', { name: 'Amount Conversion Amount' }).fill('500')
         await page.getByLabel('U.S. dollar (USD)').check()
         await page.getByRole('button', { name: 'Calculate Costs' }).click()
 
@@ -32,9 +26,8 @@ test.describe('Currency conversion', () => {
         await expect(conversionMessage).not.toBeEmpty()
 
         await page.getByRole('button', { name: 'Purchase' }).click()
+        
         const successMessage = await page.locator('#alert_content')
-        await expect(successMessage).toHaveText(
-            'Foreign currency cash was successfully purchased.'
-        )
+        await expect(successMessage).toHaveText('Foreign currency cash was successfully purchased.')
     })
 })

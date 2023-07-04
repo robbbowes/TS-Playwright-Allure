@@ -16,7 +16,7 @@ export class LoginPage {
     }
 
     async visit(): Promise<void> {
-        await this.page.goto('http://zero.webappsecurity.com/login.html')
+        await this.page.goto('http://zero.webappsecurity.com/')
     }
 
     async login(username: string, password: string): Promise<void> {

@@ -9,14 +9,12 @@ test.describe('New payment', () => {
         await page.fill('#user_login', 'username')
         await page.fill('#user_password', 'password')
         await page.click('text=Sign in')
-        await page.goto(
-            'http://zero.webappsecurity.com/bank/transfer-funds.html'
-        )
+        await page.goto('http://zero.webappsecurity.com/bank/transfer-funds.html')
     })
 
     test('Should send new payment', async ({ page }) => {
         allure.severity(Severity[1])
-        
+
         await page.click('#pay_bills_tab')
         await page.selectOption('#sp_payee', 'apple')
         await page.click('#sp_get_payee_details')
@@ -29,8 +27,6 @@ test.describe('New payment', () => {
 
         const message = await page.locator('#alert_content > span')
         await expect(message).toBeVisible()
-        await expect(message).toContainText(
-            'The payment was successfully submitted.'
-        )
+        await expect(message).toContainText('The payment was successfully submitted.')
     })
 })

@@ -1,4 +1,4 @@
 export const TAGS = {
-    myTag: " @myTag",
-    anotherTag: " @anotherTag"
+    myTag: ' @myTag',
+    anotherTag: ' @anotherTag'
 }
