@@ -1,0 +1,20 @@
+{
+    "name": "tsplaywright",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "tests:chrome": "playwright test --config=playwright.config.ts --project=Chromium",
+        "tests:firefox": "playwright test --config=playwright.config.ts --project=Firefox",
+        "tests:webkit": "playwright test --config=playwright.config.ts --project=Webkit",
+        "tests:report": "playwright test --config=playwright.config.ts --project=Chromium --headed --reporter=html",
+        
+        "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@playwright/test": "^1.35.1",
+        "prettier": "^2.8.8"
+    }
+}
