@@ -1,17 +1,19 @@
 import { Locator, Page } from '@playwright/test'
 import { LoginPage } from './LoginPage'
 import { SearchResultsPage } from './SearchResultsPage'
+import { FeedbackPage } from './FeedbackPage'
+import { AbstractPage } from './AbstractPage'
 
-export class HomePage {
-    readonly page: Page
+export class HomePage extends AbstractPage {
     readonly signInButton: Locator
     readonly searchInput: Locator
+    readonly feedbackButton: Locator
 
     constructor(page: Page) {
-        this.page = page
-
+        super(page)
         this.signInButton = page.locator('#signin_button')
         this.searchInput = page.locator('#searchTerm')
+        this.feedbackButton = page.locator('#feedback')
     }
 
     async visit(): Promise<void> {
@@ -29,4 +31,8 @@ export class HomePage {
         return new SearchResultsPage(this.page)
     }
 
+    async clickOnFeedback(): Promise<FeedbackPage> {
+        await this.feedbackButton.click()
+        return new FeedbackPage(this.page)
+    }
 }

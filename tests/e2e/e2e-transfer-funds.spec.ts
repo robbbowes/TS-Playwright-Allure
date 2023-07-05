@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 import { Severity } from '../../utils/severity'
 
-test.describe('Transfer funds and ake payments', () => {
+test.describe('Transfer funds and make payments', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://zero.webappsecurity.com/')
         await page.click('#signin_button')

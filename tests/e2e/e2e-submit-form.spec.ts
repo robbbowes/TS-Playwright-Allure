@@ -1,59 +1,45 @@
 import { test, expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 import { Severity } from '../../utils/severity'
+import { HomePage } from '../../page-objects/HomePage'
+import { FeedbackPage } from '../../page-objects/FeedbackPage'
+import { FeedbackSentPage } from '../../page-objects/FeedbackSentPage'
 
 test.describe('Feedback form submit', () => {
+    let homePage: HomePage
+    let feedbackPage: FeedbackPage
+
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://zero.webappsecurity.com/')
-        await page.click('#feedback')
+        homePage = new HomePage(page)
+        await homePage.visit()
+        feedbackPage = await homePage.clickOnFeedback()
+
+        await feedbackPage.setName('some name')
+        await feedbackPage.setEmail('some@email.com')
+        await feedbackPage.setSubject('some subject')
+        await feedbackPage.setComment('some comment')
+
+        await expect(feedbackPage.nameInput).not.toBeEmpty()
+        await expect(feedbackPage.emailInput).not.toBeEmpty()
+        await expect(feedbackPage.subjectInput).not.toBeEmpty()
+        await expect(feedbackPage.commentInput).not.toBeEmpty()
     })
 
     test('Reset feedback form', async ({ page }) => {
         allure.severity(Severity[3])
 
-        await page.fill('#name', 'some name')
-        await page.fill('#email', 'some@email.com')
-        await page.fill('#subject', 'some subject')
-        await page.fill('#comment', 'some comment')
+        await feedbackPage.resetForm()
 
-        let name = await page.locator('#name')
-        let email = await page.locator('#email')
-        let subject = await page.locator('#subject')
-        let comment = await page.locator('#comment')
-
-        await expect(name).not.toBeEmpty()
-        await expect(email).not.toBeEmpty()
-        await expect(subject).not.toBeEmpty()
-        await expect(comment).not.toBeEmpty()
-
-        await page.click('input[name="clear"]')
-
-        await expect(name).toBeEmpty()
-        await expect(email).toBeEmpty()
-        await expect(subject).toBeEmpty()
-        await expect(comment).toBeEmpty()
+        await expect(feedbackPage.nameInput).toBeEmpty()
+        await expect(feedbackPage.emailInput).toBeEmpty()
+        await expect(feedbackPage.subjectInput).toBeEmpty()
+        await expect(feedbackPage.commentInput).toBeEmpty()
     })
 
     test('Submit feedback form', async ({ page }) => {
         allure.severity(Severity[2])
 
-        await page.fill('#name', 'some name')
-        await page.fill('#email', 'some@email.com')
-        await page.fill('#subject', 'some subject')
-        await page.fill('#comment', 'some comment')
-
-        let name = await page.locator('#name')
-        let email = await page.locator('#email')
-        let subject = await page.locator('#subject')
-        let comment = await page.locator('#comment')
-
-        await expect(name).not.toBeEmpty()
-        await expect(email).not.toBeEmpty()
-        await expect(subject).not.toBeEmpty()
-        await expect(comment).not.toBeEmpty()
-
-        await page.click('input[name="submit"]')
-
-        await page.getByText('Thank you for your comments, some name.')
+        let feedbackSentPage: FeedbackSentPage = await feedbackPage.submitForm()
+        await expect(feedbackSentPage.infoText).toContainText('Thank you for your comments, some name')
     })
 })
