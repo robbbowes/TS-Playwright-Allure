@@ -1,18 +1,18 @@
-import { test, expect } from '@playwright/test'
+import { test as base, expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 import { Severity } from '../../utils/severity'
 import { HomePage } from '../../page-objects/HomePage'
 import { FeedbackPage } from '../../page-objects/FeedbackPage'
 import { FeedbackSentPage } from '../../page-objects/FeedbackSentPage'
 
-test.describe('Feedback form submit', () => {
-    let homePage: HomePage
-    let feedbackPage: FeedbackPage
-
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page)
+const test = base.extend<{homePage: HomePage, feedbackPage: FeedbackPage}>({
+    homePage: async ({ page }, use) => {
+        const homePage = new HomePage(page)
         await homePage.visit()
-        feedbackPage = await homePage.clickOnFeedback()
+        await use(homePage)
+    },
+    feedbackPage: async ({ homePage }, use) => {
+        const feedbackPage = await homePage.clickOnFeedback()
 
         await feedbackPage.setName('some name')
         await feedbackPage.setEmail('some@email.com')
@@ -23,9 +23,13 @@ test.describe('Feedback form submit', () => {
         await expect(feedbackPage.emailInput).not.toBeEmpty()
         await expect(feedbackPage.subjectInput).not.toBeEmpty()
         await expect(feedbackPage.commentInput).not.toBeEmpty()
-    })
 
-    test('Reset feedback form', async ({ page }) => {
+        await use(feedbackPage)
+    }
+})
+
+test.describe('Feedback form submit', () => {
+    test('Reset feedback form', async ({ feedbackPage }) => {
         allure.severity(Severity[3])
 
         await feedbackPage.resetForm()
@@ -36,7 +40,7 @@ test.describe('Feedback form submit', () => {
         await expect(feedbackPage.commentInput).toBeEmpty()
     })
 
-    test('Submit feedback form', async ({ page }) => {
+    test('Submit feedback form', async ({ feedbackPage }) => {
         allure.severity(Severity[2])
 
         let feedbackSentPage: FeedbackSentPage = await feedbackPage.submitForm()

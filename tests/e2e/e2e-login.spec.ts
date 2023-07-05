@@ -1,21 +1,33 @@
-import { test, expect } from '@playwright/test'
+import { test as base, expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 
 import { LoginPage } from '../../page-objects/LoginPage'
 import { Severity } from '../../utils/severity'
 import { HomePage } from '../../page-objects/HomePage'
 
-test.describe('Login / logout flow', () => {
-    let homePage: HomePage
-    let loginPage: LoginPage
+const test = base.extend<{ homePage: HomePage; loginPage: LoginPage }>({
+    homePage: async ({ page }, use) => {
+        const homePage = new HomePage(page)
+        await homePage.visit()
+        await use(homePage)
+    },
+    loginPage: async ({ homePage }, use) => {
+        const loginPage = await homePage.clickOnSignIn()
+        await use(loginPage)
+    }
+})
 
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page)
-        homePage.visit()
-        loginPage = await homePage.clickOnSignIn()
-    })
+test.describe.only('Login / logout flow', () => {
+    // let homePage: HomePage
+    // let loginPage: LoginPage
 
-    test('Unsuccessful login', async ({ page }) => {
+    // test.beforeEach(async ({ page }) => {
+    //     homePage = new HomePage(page)
+    //     homePage.visit()
+    //     loginPage = await homePage.clickOnSignIn()
+    // })
+
+    test('Unsuccessful login', async ({ loginPage }) => {
         allure.severity(Severity[1])
 
         await loginPage.login('invalidusername', 'invalidpassword')
@@ -23,7 +35,7 @@ test.describe('Login / logout flow', () => {
         await expect(errorMessage).toContainText('Login and/or password are wrong.')
     })
 
-    test('Successful login', async ({ page }) => {
+    test('Successful login', async ({ loginPage, page }) => {
         allure.severity(Severity[1])
 
         await loginPage.login('username', 'password')
