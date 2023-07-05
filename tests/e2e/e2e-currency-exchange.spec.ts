@@ -26,7 +26,7 @@ test.describe('Currency conversion', () => {
         await expect(conversionMessage).not.toBeEmpty()
 
         await page.getByRole('button', { name: 'Purchase' }).click()
-        
+
         const successMessage = await page.locator('#alert_content')
         await expect(successMessage).toHaveText('Foreign currency cash was successfully purchased.')
     })

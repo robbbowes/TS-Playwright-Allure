@@ -5,7 +5,7 @@ import { LoginPage } from '../../page-objects/LoginPage'
 import { Severity } from '../../utils/severity'
 import { HomePage } from '../../page-objects/HomePage'
 
-test.describe.only('Login / logout flow', () => {
+test.describe('Login / logout flow', () => {
     let homePage: HomePage
     let loginPage: LoginPage
 
