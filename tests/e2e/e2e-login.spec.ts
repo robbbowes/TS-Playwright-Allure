@@ -12,7 +12,7 @@ test.describe('Login / logout flow', () => {
     test.beforeEach(async ({ page }) => {
         homePage = new HomePage(page)
         homePage.visit()
-        loginPage = await homePage.clickSignIn()
+        loginPage = await homePage.clickOnSignIn()
     })
 
     test('Unsuccessful login', async ({ page }) => {

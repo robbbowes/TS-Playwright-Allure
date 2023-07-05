@@ -1,16 +1,19 @@
 import { test, expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 import { Severity } from '../../utils/severity'
+import { HomePage } from '../../page-objects/HomePage'
+import { SearchResultsPage } from '../../page-objects/SearchResultsPage'
 
 test.describe('Search result', () => {
+
     test('Should return search results', async ({ page }) => {
         allure.severity(Severity[4])
 
-        await page.goto('http://zero.webappsecurity.com/')
-        await page.fill('#searchTerm', 'Bank')
-        await page.keyboard.press('Enter')
+        let homePage: HomePage = new HomePage(page)
+        await homePage.visit()   
+        let resultsPage: SearchResultsPage = await homePage.search('Bank')
 
-        const linkCount = await page.locator('li > a')
-        await expect(linkCount).toHaveCount(2)
+        const results = await resultsPage.getSearchResults()
+        await expect(results).toHaveCount(2)
     })
 })
