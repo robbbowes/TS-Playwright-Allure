@@ -1,31 +1,10 @@
-import { test as base, expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 
-import { LoginPage } from '../../page-objects/LoginPage'
 import { Severity } from '../../utils/severity'
-import { HomePage } from '../../page-objects/HomePage'
-
-const test = base.extend<{ homePage: HomePage; loginPage: LoginPage }>({
-    homePage: async ({ page }, use) => {
-        const homePage = new HomePage(page)
-        await homePage.visit()
-        await use(homePage)
-    },
-    loginPage: async ({ homePage }, use) => {
-        const loginPage = await homePage.clickOnSignIn()
-        await use(loginPage)
-    }
-})
+import { openLoginPage as test } from './fixtures/open-login-page'
 
 test.describe.only('Login / logout flow', () => {
-    // let homePage: HomePage
-    // let loginPage: LoginPage
-
-    // test.beforeEach(async ({ page }) => {
-    //     homePage = new HomePage(page)
-    //     homePage.visit()
-    //     loginPage = await homePage.clickOnSignIn()
-    // })
 
     test('Unsuccessful login', async ({ loginPage }) => {
         allure.severity(Severity[1])
