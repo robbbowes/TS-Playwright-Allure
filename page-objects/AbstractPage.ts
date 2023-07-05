@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test'
 
-export class AbstractPage {
+export abstract class AbstractPage {
     readonly page: Page
 
     constructor(page: Page) {
