@@ -2,14 +2,14 @@ import { expect } from '@playwright/test'
 import { allure } from 'allure-playwright'
 
 import { Severity } from '../../utils/severity'
-import { openLoginPage as test } from './fixtures/open-login-page'
+import { openLoginPage as test } from './fixtures/login-fixtures'
 
-test.describe.only('Login / logout flow', () => {
+test.describe('Login / logout flow', () => {
 
     test('Unsuccessful login', async ({ loginPage }) => {
         allure.severity(Severity[1])
 
-        await loginPage.login('invalidusername', 'invalidpassword')
+        await loginPage.unsuccessfulLogin('invalidusername', 'invalidpassword')
         const errorMessage = await loginPage.getErrorMessage()
         await expect(errorMessage).toContainText('Login and/or password are wrong.')
     })
