@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { TAGS } from '../../utils/tags'
-import { loadHomepage, assertTitle, failTest } from '../../utils/helpers'
+import { loadHomepage, assertTitle, failTest } from './helpers'
 
 test('Simple basic test', async ({ page }) => {
     await page.goto('https://www.example.com')
