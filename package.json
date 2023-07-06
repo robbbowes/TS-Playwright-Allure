@@ -12,10 +12,10 @@
         "tests:report": "playwright test --config=playwright.config.ts --project=Chromium --headed --reporter=html",
         
         "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium",
-
         "tests:e2e:mobile": "playwright test --config=e2e.config.ts --project=MobileChromium",
+        "tests:visual": "playwright test --config=visual.config.ts",
+        "tests:api": "playwright test --config=api.config.ts --project=Chromium"
 
-        "tests:visual": "playwright test --config=visual.config.ts"
     },
     "author": "",
     "license": "ISC",
