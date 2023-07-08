@@ -1,9 +1,10 @@
-import { PlaywrightTestConfig } from '@playwright/test'
+import { defineConfig } from '@playwright/test'
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
     testDir: 'tests/',
     timeout: 60_000,
     retries: 0,
+    forbidOnly: !!process.env.CI,
     fullyParallel: true,
     expect: {
         timeout: 3_000
@@ -34,9 +35,7 @@ const config: PlaywrightTestConfig = {
             }
         ]
     ]
-}
-
-export default config
+})
 
 // // @ts-check
 // const { defineConfig, devices } = require('@playwright/test');
